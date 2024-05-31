@@ -1,6 +1,7 @@
 package net.enset.ebanking_backend.web;
 
 import net.enset.ebanking_backend.dtos.*;
+import net.enset.ebanking_backend.entites.Customer;
 import net.enset.ebanking_backend.exceptions.BalanceNotSufficientException;
 import net.enset.ebanking_backend.exceptions.BankAccountNotFound;
 import net.enset.ebanking_backend.services.BankAccountService;
@@ -20,6 +21,11 @@ public class BankAccountRestAPI {
     public BankAccountDTO getBankAccount(@PathVariable String accountId) throws BankAccountNotFound {
         return bankAccountService.getBankAccount(accountId);
     }
+    @GetMapping("/accounts/{customer}")
+    public  List<BankAccountDTO> getBankAccountByCustomer(@PathVariable Customer customer) throws BankAccountNotFound {
+        return bankAccountService.getBankAccountByCustomer(customer);
+    }
+
     @GetMapping("/accounts")
     public List<BankAccountDTO> listAccounts(){
         return bankAccountService.listBANK_ACCOUNTS();

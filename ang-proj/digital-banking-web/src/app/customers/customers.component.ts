@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
 import {CustomerService} from "../services/customer.service";
-import {catchError, Observable, throwError} from "rxjs";
+import {catchError, map, Observable, throwError} from "rxjs";
 import {Customer} from "../model/customer.model";
-import {FormBuilder, FormGroup, FormRecord} from "@angular/forms";
+import {FormBuilder, FormGroup} from "@angular/forms";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-customers',
@@ -14,17 +14,15 @@ export class CustomersComponent implements OnInit{
   customers ?:Observable<Array<Customer>>;
   erroMassage :String|undefined;
   searchFormGroup !: FormGroup;
-  private router: any;
 
-  constructor(private  customerService :CustomerService ,private fb :FormBuilder) {
+
+  constructor(private  customerService :CustomerService ,private fb :FormBuilder ,private router :Router) {
   }
   ngOnInit(): void {
 
     this.searchFormGroup=this.fb.group({
       keyword : this.fb.control("")
     });
-
-
     this.customers = this.customerService.getCustomers().pipe(
       catchError(err => {
         this.erroMassage = err.message;
@@ -43,12 +41,45 @@ export class CustomersComponent implements OnInit{
     );
   }
 
+  handleDeleteCustomer(c: Customer) {
+    let conf = confirm("Are you sure?");
+    if(!conf) return;
+    this.customerService.deleteCustomer(c.id).subscribe({
+    next : (resp) => {
+      this.customers=this.customers?.pipe(
+        map(data =>{
+
+          let index=data.indexOf(c);
+          data.slice(index,1);
+          return data;
+        })
+      )
+      },
+     error : err => {
+      console.log(err);
+      }
+    })
+    console.log(c.nom);
+    return null ;
+  }
 
 
   handleCustomerAccounts(customer: Customer) {
+
     this.router.navigateByUrl("/customer-accounts/"+customer.id,{state :customer});
   }
 
 
 
+
 }
+
+
+
+
+
+
+
+
+
+
