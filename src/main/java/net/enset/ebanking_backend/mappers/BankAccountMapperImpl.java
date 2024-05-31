@@ -1,6 +1,5 @@
 package net.enset.ebanking_backend.mappers;
 
-import com.fasterxml.jackson.databind.util.BeanUtil;
 import net.enset.ebanking_backend.dtos.AccountOperationDTO;
 import net.enset.ebanking_backend.dtos.CurrentBankAccountDTO;
 import net.enset.ebanking_backend.dtos.CustomerDTO;
@@ -62,6 +61,8 @@ public class BankAccountMapperImpl {
         BeanUtils.copyProperties(accountOperation,accountOperationDTO);
         return accountOperationDTO;
     }
+
+
 
 
 

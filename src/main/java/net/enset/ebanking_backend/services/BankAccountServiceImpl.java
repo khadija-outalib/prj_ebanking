@@ -165,8 +165,6 @@ public class BankAccountServiceImpl implements  BankAccountService{
 
     }
 
-
-
     @Override
     public List<BankAccountDTO> listBANK_ACCOUNTS(){
         List<BankAccount> bankAccounts = accountRepository.findAll();
@@ -188,7 +186,6 @@ public class BankAccountServiceImpl implements  BankAccountService{
                 .orElseThrow(() -> new CustomerNotFoundException("Customer Not found"));
         return dtoMapper.fromCustomer(customer);
     }
-
 
     @Override
     public CustomerDTO updateCustomer(CustomerDTO customerDTO) {
@@ -233,19 +230,23 @@ public class BankAccountServiceImpl implements  BankAccountService{
         return customerDTOS;
     }
 
+    @Override
+    public List<BankAccountDTO> getBankAccountByCustomer(Customer customer) {
 
+        List<BankAccount> bankAccounts = accountRepository.findByCustomer(customer);
 
+        List<BankAccountDTO> bankAccountDTOS = bankAccounts.stream().map(bankAccount -> {
+            if (bankAccount instanceof SavingAccount) {
+                SavingAccount savingAccount = (SavingAccount) bankAccount;
+                return dtoMapper.fromSavingBankAccount(savingAccount);
+            } else {
+                CurrentAccount currentAccount = (CurrentAccount) bankAccount;
+                return dtoMapper.fromCurrentBankAccount(currentAccount);
+            }
+        }).collect(Collectors.toList());
+        return bankAccountDTOS;
 
-
-
-
-
-
-
-
-
-
-
+    }
 
 
 }

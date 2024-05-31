@@ -1,6 +1,5 @@
 package net.enset.ebanking_backend;
 
-import lombok.Builder;
 import net.enset.ebanking_backend.dtos.BankAccountDTO;
 import net.enset.ebanking_backend.dtos.CurrentBankAccountDTO;
 import net.enset.ebanking_backend.dtos.CustomerDTO;
@@ -35,7 +34,7 @@ public class EbankingBackendApplication {
     @Bean
     CommandLineRunner commandLineRunner (BankAccountService bankAccountService){
         return  args -> {
-            Stream.of("Yassmine","Khadija","itimad").forEach(name ->{
+            Stream.of("Yassmine","Khadija","noura","itimad").forEach(name ->{
                 CustomerDTO customer = new CustomerDTO();
                 customer.setNom(name);
                 customer.setEmail(name+"@gmail.com");

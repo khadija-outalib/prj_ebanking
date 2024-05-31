@@ -8,8 +8,12 @@ import { AccountsComponent } from './accounts/accounts.component';
 import { AppRoutingModule } from './app-routing.module';
 import { NewCustomerComponent } from './new-customer/new-customer.component';
 import { CustomerAccountsComponent } from './customer-accounts/customer-accounts.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
+import { LoginComponent } from './login/login.component';
+import { AdminTemplateComponent } from './admin-template/admin-template.component';
+import {AppHttpInterceptor} from "./interceptor/app-http.interceptor";
+import { NotAuthorizedComponent } from './not-authorized/not-authorized.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +22,10 @@ import {ReactiveFormsModule} from "@angular/forms";
     CustomersComponent,
     AccountsComponent,
     NewCustomerComponent,
-    CustomerAccountsComponent
+    CustomerAccountsComponent,
+    LoginComponent,
+    AdminTemplateComponent,
+    NotAuthorizedComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +33,10 @@ import {ReactiveFormsModule} from "@angular/forms";
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+
+    {provide : HTTP_INTERCEPTORS, useClass : AppHttpInterceptor, multi : true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

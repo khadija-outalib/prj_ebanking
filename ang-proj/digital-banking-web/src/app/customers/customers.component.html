@@ -13,7 +13,6 @@
               </button>
             </div>
           </form>
-
         </div>
         <table class="table">
           <thead>
@@ -22,17 +21,17 @@
           </tr>
           </thead>
           <tbody>
-          <tr *ngFor="let c of customers |async">
+          <tr *ngFor="let c of customers | async">
             <td>{{c.id}}</td>
             <td>{{c.nom}}</td>
             <td>{{c.email}}</td>
             <td>
-              <button  class="btn btn-danger">
-                <i class="bi bi-trash">Delete</i>
+              <button (click)="handleDeleteCustomer(c)" class="btn btn-danger">
+                <i class="bi bi-trash"></i>
               </button>
             </td>
             <td>
-              <button  class="btn btn-success">
+              <button (click)="handleCustomerAccounts(c)" class="btn btn-success">
                 Accounts
               </button>
             </td>
@@ -43,13 +42,13 @@
     </div>
   </ng-container>
   <ng-template #failureOrLading>
-    <ng-container *ngIf="erroMassage; else loading">
+    <ng-container *ngIf="errorMessage; else loading">
       <div class="text-danger">
-        {{erroMassage}}
+        {{errorMessage}}
       </div>
     </ng-container>
     <ng-template #loading>
-      <div class="loader"></div>
+      Loading .....
     </ng-template>
   </ng-template>
 </div>
