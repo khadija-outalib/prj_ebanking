@@ -26,12 +26,21 @@
             <td>{{c.nom}}</td>
             <td>{{c.email}}</td>
             <td>
+<<<<<<< HEAD
               <button (click)="handleDeleteCustomer(c)" class="btn btn-danger">
                 <i class="bi bi-trash"></i>
               </button>
             </td>
             <td>
               <button (click)="handleCustomerAccounts(c)" class="btn btn-success">
+=======
+              <button  class="btn btn-danger">
+                <i class="bi bi-trash"  (click)="handleDeleteCustomer(c)" >Delete</i>
+              </button>
+            </td>
+            <td>
+              <button class="btn btn-success"  (click)="handleCustomerAccounts(c)">
+>>>>>>> 59b08ce64785e39626b26aa8679ad71733474ab4
                 Accounts
               </button>
             </td>
